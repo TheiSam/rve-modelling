@@ -3,9 +3,10 @@ from itertools import count
 from os import remove
 from re import I
 import numpy as np
-import cv2 as cv
-import matplotlib.pyplot as plt
 import math
+
+
+###### THIS FILE CONTAINS HELPER FUNCTIONS TO ASSIST WITH STATISTICAL ANALYSIS AND RVE GENERATION ##########
 
 # Find the area of an image
 def find_area(image):
@@ -93,14 +94,8 @@ def remove_voids(fibre_list, void_list):
         y_fibre = fibre[1]
         r_fibre = fibre[2]
 
-        # fibre_list.any()
-
-        # print(is_any_intersecting(x_fibre, y_fibre, r_fibre, void_list))
         if not np.any( [is_intersecting(x_fibre, y_fibre, r_fibre, x, y, r, 0) for x, y, r in void_list] ):
             cleaned_fibre_list.append(fibre)
-
-        # if not is_any_intersecting(x_fibre, y_fibre, r_fibre, void_list):
-        #     cleaned_fibre_list.append(fibre)
             
     return np.asarray(cleaned_fibre_list)
 
