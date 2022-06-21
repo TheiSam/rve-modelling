@@ -29,7 +29,11 @@ req_width = 541
 RVE_bounds = (35, 35)
 RVE_fib_radius = 3.5
 
-void_radius = 2
+void_dimensions = [6, 4] # For circle, [radius]. For ellipse, [total_width, total_height]
+void_shape = "ellipse"
+
+# void_dimensions = [2] # For circle, [radius]. For ellipse, [width, height]
+# void_shape = "circle"
 
 # File and folder paths
 # Specify path to a folder where the images to be read in are stored.
@@ -89,13 +93,15 @@ avg_std_dist = sum_std_dist / num_images
 avg_void_ratio = sum_void_ratio / num_images
 
 # Generate the RVE
-generated_circles = generate.generate_RVE(RVE_bounds[0], RVE_bounds[1], RVE_fib_radius, avg_vol_frac, avg_std_dist, void_radius, avg_void_ratio)
+generated_circles = generate.generate_RVE(RVE_bounds[0], RVE_bounds[1], RVE_fib_radius, avg_vol_frac, avg_std_dist, void_dimensions, avg_void_ratio, void_shape)
 
 # Show the generated RVE
 fibre_list = generated_circles[0]
 void_list = generated_circles[1]
-generate.draw_circles(RVE_bounds[0], RVE_bounds[1], fibre_list, void_list)
+generate.draw_RVE(RVE_bounds[0], RVE_bounds[1], fibre_list, void_list, void_shape)
 
 # Save the fibre and void lists to the specified path.
 np.savetxt(saved_fibre_list, fibre_list, delimiter = ",")
-np.savetxt(saved_void_list,  void_list, delimiter = ",")
+
+if void_shape == "circle":
+    np.savetxt(saved_void_list, void_list, delimiter = ",")    
