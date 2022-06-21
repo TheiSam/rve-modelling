@@ -25,15 +25,13 @@ from circle_finding import circle_finding
 req_height = 541
 req_width = 541
 
-# Set the desired bounds, fibre radius and void radius of the RVE to be generated.
+# Set the desired bounds, fibre radius and void dimensions of the RVE to be generated.
 RVE_bounds = (35, 35)
 RVE_fib_radius = 3.5
 
-void_dimensions = [6, 4] # For circle, [radius]. For ellipse, [total_width, total_height]
+ # For circle, [radius]. For ellipse, [horizontal_radius, vertical_radius]
+void_dimensions = [3, 2]
 void_shape = "ellipse"
-
-# void_dimensions = [2] # For circle, [radius]. For ellipse, [width, height]
-# void_shape = "circle"
 
 # File and folder paths
 # Specify path to a folder where the images to be read in are stored.
@@ -103,5 +101,5 @@ generate.draw_RVE(RVE_bounds[0], RVE_bounds[1], fibre_list, void_list, void_shap
 # Save the fibre and void lists to the specified path.
 np.savetxt(saved_fibre_list, fibre_list, delimiter = ",")
 
-if void_shape == "circle":
-    np.savetxt(saved_void_list, void_list, delimiter = ",")    
+np.savetxt(saved_void_list, void_list, delimiter = ",")    
+

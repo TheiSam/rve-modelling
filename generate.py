@@ -89,9 +89,9 @@ def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, voi
             void_area = math.pi * void_radius * void_radius
 
         if void_shape == "ellipse":
-            ellipse_width = void_dimensions[0]
-            ellipse_height = void_dimensions[1]
-            ellipse_area = math.pi * ellipse_width / 2 * ellipse_height / 2
+            horizontal_radius = void_dimensions[0]
+            vertical_radius = void_dimensions[1]
+            ellipse_area = math.pi * horizontal_radius * vertical_radius
 
         voids = []
         filled_void_area = 0
@@ -165,13 +165,13 @@ def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, voi
 
             elif void_shape == "ellipse":
                 # Generate a random ellipse within the height and width.
-                # Note: An ellipse will be represented by centre, width and height.
+                # Note: An ellipse will be represented by x_centre, y_centre, horizontal_radius and vertical_radius.
                 x_centre = random.randint(0, width)
                 y_centre = random.randint(0, height)
-                void = [(x_centre, y_centre), ellipse_width, ellipse_height]
+                void = [x_centre, y_centre, horizontal_radius, vertical_radius]
 
                 # Check that the void does not go out of bounds
-                if (x_centre + ellipse_width >= width or x_centre - ellipse_width <= 0 or y_centre + ellipse_height >= height or y_centre - ellipse_height <= 0):
+                if (x_centre + horizontal_radius >= width or x_centre - horizontal_radius <= 0 or y_centre + vertical_radius >= height or y_centre - vertical_radius <= 0):
                     continue
 
                 # If the void overlaps with a fibre or a void, remove the void.
@@ -208,7 +208,7 @@ def draw_RVE(height, width, fibre_list, void_list, void_shape):
     if void_shape == "ellipse":
     # Draw elliptical voids
         for void in void_list:
-            ellipse = patches.Ellipse(xy=(void[0][0], void[0][1]), width=void[1], height=void[2], color='black')
+            ellipse = patches.Ellipse(xy=(void[0], void[1]), width=void[2] * 2, height=void[3] * 2, color='black')
             plt.gca().add_artist(ellipse)
 
     plt.show()
