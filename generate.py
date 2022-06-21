@@ -68,7 +68,7 @@ def mirror_boundary_circle(circle, height, width):
     return circles
 
 # This function generates the RVE.
-def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, void_radius, void_ratio):
+def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, void_dimensions, void_ratio, void_shape):
 
     similar_distribution = False
     filled_area = 0;
@@ -82,8 +82,17 @@ def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, voi
         filled_area = 0
         counter = 0
 
-        void_area = math.pi * void_radius * void_radius
         required_void_area = void_ratio * height * width
+
+        if void_shape == "circle":
+            void_radius = void_dimensions[0]
+            void_area = math.pi * void_radius * void_radius
+
+        if void_shape == "ellipse":
+            ellipse_width = void_dimensions[0]
+            ellipse_height = void_dimensions[1]
+            ellipse_area = math.pi * ellipse_width / 2 * ellipse_height / 2
+
         voids = []
         filled_void_area = 0
 
@@ -135,28 +144,50 @@ def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, voi
         
         # Generate voids
         while filled_void_area < 0.95 * required_void_area:
-            # Generate a random circle within the height and width.
-            x_centre = random.randint(0, width)
-            y_centre = random.randint(0, height)
-            void = [x_centre, y_centre, void_radius]
 
-            # Check that the void does not go out of bounds
-            if (x_centre + void_radius >= width or x_centre - void_radius <= 0 or y_centre + void_radius >= height or y_centre - void_radius <= 0):
-                continue
+            if void_shape == "circle":
+                # Generate a random circle within the height and width.
+                x_centre = random.randint(0, width)
+                y_centre = random.randint(0, height)
+                void = [x_centre, y_centre, void_radius]
 
-            # If void overlaps with another circle, remove the circle.
-            if analysis.is_any_intersecting(x_centre, y_centre, void_radius, fibres, 0) or analysis.is_any_intersecting(x_centre, y_centre, void_radius, voids, 0):
-                continue
+                # Check that the void does not go out of bounds
+                if (x_centre + void_radius >= width or x_centre - void_radius <= 0 or y_centre + void_radius >= height or y_centre - void_radius <= 0):
+                    continue
 
-            # Otherwise add the void
-            voids.append(void)
-            filled_void_area += void_area
+                # If void overlaps with another circle, remove the circle.
+                if analysis.is_any_intersecting(x_centre, y_centre, void_radius, fibres, 0) or analysis.is_any_intersecting(x_centre, y_centre, void_radius, voids, 0):
+                    continue
+
+                # Otherwise add the void
+                voids.append(void)
+                filled_void_area += void_area
+
+            elif void_shape == "ellipse":
+                # Generate a random ellipse within the height and width.
+                # Note: An ellipse will be represented by centre, width and height.
+                x_centre = random.randint(0, width)
+                y_centre = random.randint(0, height)
+                void = [(x_centre, y_centre), ellipse_width, ellipse_height]
+
+                # Check that the void does not go out of bounds
+                if (x_centre + ellipse_width >= width or x_centre - ellipse_width <= 0 or y_centre + ellipse_height >= height or y_centre - ellipse_height <= 0):
+                    continue
+
+                # If the void overlaps with a fibre or a void, remove the void.
+                if analysis.is_any_ellipse_circle_intersecting(void, fibres) or analysis.is_any_ellipse_ellipse_intersecting(void, voids):
+                    continue
+
+                # Otherwise add the void
+                voids.append(void)
+                filled_void_area += ellipse_area
+
 
     # The RVE is represented by a list of fibre and void positions.
     return [fibres, voids]
 
 # Draw the RVE
-def draw_circles(height, width, fibre_list, void_list):
+def draw_RVE(height, width, fibre_list, void_list, void_shape):
     plt.axis([-0.5 * width, 1.5 * width, -0.5 * height , 1.5 * height])
     plt.axis("equal")
     plt.suptitle("Generated RVE", fontsize=25)
@@ -168,9 +199,16 @@ def draw_circles(height, width, fibre_list, void_list):
         c = plt.Circle((fibre[0], fibre[1]), radius = fibre[2], color='blue')
         plt.gca().add_artist(c)
 
-    # Draw voids
-    for void in void_list:
-        c = plt.Circle((void[0], void[1]), radius = void[2], color='black')
-        plt.gca().add_artist(c)
+    if void_shape == "circle":
+        # Draw circular voids
+        for void in void_list:
+            c = plt.Circle((void[0], void[1]), radius = void[2], color='black')
+            plt.gca().add_artist(c)
+
+    if void_shape == "ellipse":
+    # Draw elliptical voids
+        for void in void_list:
+            ellipse = patches.Ellipse(xy=(void[0][0], void[0][1]), width=void[1], height=void[2], color='black')
+            plt.gca().add_artist(ellipse)
 
     plt.show()
