@@ -29,9 +29,8 @@ req_width = 541
 RVE_bounds = (35, 35)
 RVE_fib_radius = 3.5
 
- # For circle, [radius]. For ellipse, [horizontal_radius, vertical_radius]
-void_dimensions = [3, 2]
-void_shape = "ellipse"
+void_dimensions = [3, 2]  # For circle, void_dimensions = [radius]. For ellipse, void_dimensions = [horizontal_radius, vertical_radius]
+void_shape = "ellipse"    # Either "circle" or "ellipse"
 
 # File and folder paths
 # Specify path to a folder where the images to be read in are stored.
