@@ -80,7 +80,6 @@ def is_intersecting(x_1, y_1, r_1, x_2, y_2, r_2, buffer):
 # Check if circle is intersecting with any other circle in a list of circles
 def is_any_intersecting(x, y, r, circle_list, buffer):
     for circle in circle_list:
-        # return is_intersecting(x, y, r, circle[0], circle[1], circle[2]).any()
         if is_intersecting(x, y, r, circle[0], circle[1], circle[2], buffer):
             return True
     return False
@@ -107,6 +106,59 @@ def total_circle_area(circles):
 
     return total_area
 
+# Check if an ellipse and a cricle are intersecting. 
+def is_ellipse_circle_intersecting(ellipse, circle):
+    # a and b represent the two radii of the ellipse
+    a = ellipse[2]
+    b = ellipse[3]
+    major_radius = a if a > b else b
+
+    # Find distance between centres
+    x_1 = ellipse[0]
+    y_1 = ellipse[1]
+    x_2 = circle[0]
+    y_2 = circle[1]
+    dist = math.sqrt((x_1 - x_2) * (x_1 - x_2) + (y_1 - y_2) * (y_1 - y_2))
+
+    circle_radius = circle[2]
+
+    return dist < major_radius + circle_radius
+    
+# Check if ellipse is intersecting with any circle in a list of circles
+def is_any_ellipse_circle_intersecting(ellipse, circle_list):
+    for circle in circle_list:
+        if is_ellipse_circle_intersecting(ellipse, circle):
+            return True
+    return False
+
+# Check if an ellipse and a cricle are intersecting. 
+def is_ellipse_ellipse_intersecting(ellipse_1, ellipse_2):
+    # a and b represent the two radii of the ellipse
+    a = ellipse_1[2]
+    b = ellipse_1[3]
+    major_radius_1 = a if a > b else b
+
+    # a and b represent the two radii of the ellipse
+    a = ellipse_2[2]
+    b = ellipse_2[3]
+    major_radius_2 = a if a > b else b
+
+    # Find distance between centres
+    x_1 = ellipse_1[0]
+    y_1 = ellipse_1[1]
+    x_2 = ellipse_2[0]
+    y_2 = ellipse_2[1]
+
+    dist = math.sqrt((x_1 - x_2) * (x_1 - x_2) + (y_1 - y_2) * (y_1 - y_2))
+
+    return dist < major_radius_1 + major_radius_2
+    
+# Check if ellipse is intersecting with any circle in a list of circles
+def is_any_ellipse_ellipse_intersecting(ellipse_1, ellipse_list):
+    for ellipse_2 in ellipse_list:
+        if is_ellipse_ellipse_intersecting(ellipse_1, ellipse_2):
+            return True
+    return False
 
 
 
