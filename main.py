@@ -29,6 +29,8 @@ req_width = 541
 RVE_bounds = (35, 35)
 RVE_fib_radius = 3.5
 
+min_fib_dist = 0.2         # Minimum distance between fibres
+
 void_dimensions = [3, 2]  # For circle, void_dimensions = [radius]. For ellipse, void_dimensions = [horizontal_radius, vertical_radius]
 void_shape = "ellipse"    # Either "circle" or "ellipse"
 
@@ -37,9 +39,9 @@ void_shape = "ellipse"    # Either "circle" or "ellipse"
 set_parameters_manually = True
 
 # Set RVE parameters manually. These parameters will be taken if set_parameters_manually = True
-fibre_volume_ratio = 0      # Fibre volume ratio
-std_dist = 0.4              # Standard distance (simialr to standard deviation) referring to spatial distribution of fibres.
-void_ratio = 0              # Void ratio
+fibre_volume_ratio = 0.3      # Fibre volume ratio
+std_dist = 0.4              # Standard distance (similar to standard deviation) referring to spatial distribution of fibres.
+void_ratio = 0.05              # Void ratio. Set void ratio = 0 to get rid of voids
 
 # File and folder paths
 # Specify path to a folder where the images to be read in are stored.
@@ -94,13 +96,14 @@ if (not set_parameters_manually):
 
     num_images = len(all_stats)
 
+    # Set the RVE stats as the average stats of each
     fibre_volume_ratio = sum_vol_fraction / num_images
     std_dist = sum_std_dist / num_images
     void_ratio = sum_void_ratio / num_images
 
 
 # Generate the RVE
-generated_circles = generate.generate_RVE(RVE_bounds[0], RVE_bounds[1], RVE_fib_radius, fibre_volume_ratio, std_dist, void_dimensions, void_ratio, void_shape)
+generated_circles = generate.generate_RVE(RVE_bounds[0], RVE_bounds[1], RVE_fib_radius, fibre_volume_ratio, std_dist, void_dimensions, void_ratio, void_shape, min_fib_dist)
 
 # Show the generated RVE
 fibre_list = generated_circles[0]

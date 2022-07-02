@@ -68,7 +68,7 @@ def mirror_boundary_circle(circle, height, width):
     return circles
 
 # This function generates the RVE.
-def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, void_dimensions, void_ratio, void_shape):
+def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, void_dimensions, void_ratio, void_shape, min_fib_dist):
 
     similar_distribution = False
     filled_area = 0;
@@ -123,7 +123,7 @@ def generate_RVE(height, width, fib_radius, vol_fraction, standard_distance, voi
                 x_centre = circle[0]
                 y_centre = circle[1]
                 curr_radius = circle[2]
-                if analysis.is_any_intersecting(x_centre, y_centre, curr_radius, fibres, 0.2):
+                if analysis.is_any_intersecting(x_centre, y_centre, curr_radius, fibres, min_fib_dist):
                     valid_circle = False
                     
             if valid_circle:
