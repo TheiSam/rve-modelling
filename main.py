@@ -35,17 +35,23 @@ void_dimensions = [3, 2]  # For circle, void_dimensions = [radius]. For ellipse,
 void_shape = "ellipse"    # Either "circle" or "ellipse"
 
 # Set this to True and the manual RVE parameters will be used for RVE generation.
+# IF true, then just set the manual RVE parameters below. image_folder_path is irrelevant
 # Set this to False and the RVE parameters will be derived from the image_folder_path.
+# If false, provide a valid image_folder_path below.
 set_parameters_manually = True
 
+######################## RVE PARAMETERS BEING SET MANUALLY #############
 # Set RVE parameters manually. These parameters will be taken if set_parameters_manually = True
 fibre_volume_ratio = 0.3      # Fibre volume ratio
 std_dist = 0.4              # Standard distance (similar to standard deviation) referring to spatial distribution of fibres.
 void_ratio = 0.05              # Void ratio. Set void ratio = 0 to get rid of voids
+###############################################################################
 
+###################### RVE PARAMETERS DERIVED FROM IMAGES IN FOLDER ########################
 # File and folder paths
 # Specify path to a folder where the images to be read in are stored.
 image_folder_path = "C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/void_images"
+########################################################################################
 
 # Specify path for fibre and void lists from the generated RVE to be saved to.
 saved_fibre_list = "C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/RVE_fibres.csv"
