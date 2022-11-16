@@ -1,7 +1,3 @@
-from ast import For
-from itertools import count
-from os import remove
-from re import I
 import numpy as np
 import math
 
@@ -159,63 +155,3 @@ def is_any_ellipse_ellipse_intersecting(ellipse_1, ellipse_list):
         if is_ellipse_ellipse_intersecting(ellipse_1, ellipse_2):
             return True
     return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-''' NO LONGER USED
-
-
-# Extract x and y coordinates from circle list
-def extract_coordinates(circle_list):
-    coordinates = []
-    for circle in circle_list:
-        x = circle[0]
-        y = circle[1]
-        coordinate = [x, y]
-        coordinates.append(coordinate)
-    
-    return coordinates
-
-# Find the covariance matrix
-def cov(circle_list):
-    coordinates = extract_coordinates(circle_list)
-    return np.cov(coordinates)
-
-# Scale the cov matrix based on area
-def scaled_cov(cov_matrix, height, width):
-    return cov_matrix / (math.sqrt(height * width))
-
-
-
-# Dispersion of points can be measured by trace, determinant and largest eigenvalue
-# The trace represents the total variation
-# The determinant represents the generalised variance
-# Largest eigenvalue represents the largest variance of the data
-def trace(matrix):
-    return np.trace(matrix)
-
-def determinant(matrix):
-    return np.linalg.det(matrix)
-
-# Find the largest eigenvalue
-def max_eig(matrix):
-    eigenvalues = np.linalg.eigvals(matrix)
-    return np.max(eigenvalues)
-
-
-'''

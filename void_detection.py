@@ -64,7 +64,7 @@ def find_voids(img_path, req_height, req_width):
 # This is simply to visualise the results of this function. Change the path below to your desired image.
 # Running this file will run this function.
 if __name__ == '__main__':
-    path = "C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/Images_new/cc1_33.tif"
+    path = "C:/" # INSERT DESIRED PATH HERE
     image = cv2.imread(path)
 
     voids, ratio = find_voids(path, 10000, 10000)

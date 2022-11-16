@@ -56,7 +56,7 @@ def circle_finding(img_path, req_height, req_width):
 if __name__ == '__main__':
 
     # Path of image.
-    path = 'C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/Images_new/cc1_33.tif'
+    path = 'C:/' # INSERT DESIRED PATH HERE
 
     # Desired height and width of the image to be cropped to.
     req_height = 541

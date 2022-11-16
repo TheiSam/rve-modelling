@@ -43,11 +43,11 @@ void_ratio = 0              # Void ratio
 
 # File and folder paths
 # Specify path to a folder where the images to be read in are stored.
-image_folder_path = "C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/void_images"
+image_folder_path = "C:/" 
 
 # Specify path for fibre and void lists from the generated RVE to be saved to.
-saved_fibre_list = "C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/RVE_fibres.csv"
-saved_void_list = "C:/Users/TheiSam/Dropbox/UNI_WORK/ANSTO_Thesis/Image_Processing/RVE_voids.csv"
+saved_fibre_list = "C:/"
+saved_void_list = "C:/"
 
 ############################## END PARAMETERS TO BE CHANGED AS DESIRED #########################
 
