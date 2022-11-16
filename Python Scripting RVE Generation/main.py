@@ -26,7 +26,7 @@ req_height = 541
 req_width = 541
 
 # Set the desired bounds, fibre radius and void dimensions of the RVE to be generated.
-RVE_bounds = (35, 35)
+RVE_bounds = (105, 105)
 RVE_fib_radius = 3.5
 
 min_fib_dist = 0.2         # Minimum distance between fibres
